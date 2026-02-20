@@ -7,18 +7,41 @@ export default defineGkdApp({
     {
       key: 1,
       name: '开屏广告',
+      fastQuery: true,
+      matchTime: 10000,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      priorityTime: 10000,
       rules: [
         {
-          matches: '[text="跳过"]',
+          excludeActivityIds: [
+            'com.xingin.alioth.search.GlobalSearchActivity',
+            'com.xingin.growth.ob.FloatingObPageActivity',
+            'com.xingin.matrix.notedetail.NoteDetailActivity',
+          ],
+          excludeMatches:
+            '[text="首页" || text="选择兴趣推荐更精准"][visibleToUser=true]',
+          matches:
+            '[text*="跳过" || text^="Skip"][text.length<10][!(vid="tv_user_name")][visibleToUser=true]',
         },
       ],
     },
     {
       key: 2,
       name: '弹窗广告',
+      desc: '关闭各种弹窗广告',
+      fastQuery: true,
+      matchTime: 10000,
+      actionMaximum: 1,
+      resetMatch: 'activity',
       rules: [
         {
-          matches: '[text="关闭" || desc="关闭"]',
+          activityIds: [
+            'com.xingin.xhs.index.v2.IndexActivityV2',
+            'com.xingin.xhs.popdialog.PopDialogActivity',
+          ],
+          matches:
+            '[text="关闭" || desc="关闭" || vid="close_btn" || vid="iv_close"][visibleToUser=true]',
         },
       ],
     },

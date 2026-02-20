@@ -7,18 +7,40 @@ export default defineGkdApp({
     {
       key: 1,
       name: '开屏广告',
+      fastQuery: true,
+      matchTime: 10000,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      priorityTime: 10000,
+      excludeActivityIds: [
+        '.view.search.',
+        '.view.feed.',
+        '.view.node.DynamicNodePageActivity',
+      ],
       rules: [
         {
-          matches: '[text="跳过"]',
+          matches:
+            '[!(id="com.coolapk.market:id/item_view") && !(vid="card_view")] > [text*="跳过"][text.length<10][width<500 && height<300][visibleToUser=true]',
         },
       ],
     },
     {
       key: 2,
       name: '弹窗广告',
+      desc: '关闭各种弹窗广告',
+      fastQuery: true,
+      matchTime: 10000,
+      actionMaximum: 1,
+      resetMatch: 'activity',
       rules: [
         {
-          matches: '[text="关闭" || desc="关闭"]',
+          activityIds: [
+            '.view.main.MainActivity',
+            '.view.feed.FeedDetailActivityV8',
+            '.view.node.DynamicNodePageActivity',
+          ],
+          matches:
+            '[vid="close_view" || vid="close" || vid="iv_close" || desc="关闭" || text="关闭"][visibleToUser=true]',
         },
       ],
     },
