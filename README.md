@@ -1,8 +1,54 @@
-# GKD 订阅规则开发仓库
+# GKD 订阅规则
 
-本项目是 GKD (搞快点) 的第三方订阅规则开发仓库，用于自动生成跳过 Android 应用开屏广告和弹窗广告的规则。
+适用于 [GKD (搞快点)](https://gkd.li/) 的第三方订阅规则，自动跳过 Android 应用的开屏广告和弹窗广告。
 
-## 项目结构
+---
+
+## 用户指南
+
+### 订阅地址
+
+```
+https://raw.githubusercontent.com/jsynwy/gkd_subscription/main/dist/gkd.json5
+```
+
+**国内镜像加速**：
+```
+https://fastly.jsdelivr.net/gh/jsynwy/gkd_subscription@main/dist/gkd.json5
+```
+
+### 使用方法
+
+1. 下载安装 [GKD 应用](https://github.com/gkd-kit/gkd/releases)
+2. 打开 GKD → 点击"订阅" → 点击右下角"+"
+3. 粘贴上方订阅地址 → 点击"添加"
+4. 返回首页 → 开启"无障碍服务"权限
+5. 开启"后台运行"权限（建议）
+
+### 支持应用（14 款）
+
+| 应用 | 功能 |
+|------|------|
+| 爱奇艺 | 开屏广告、弹窗广告 |
+| 哔哩哔哩 | 开屏广告、弹窗广告 |
+| 滴滴出行 | 开屏广告、弹窗广告 |
+| 豆瓣 | 开屏广告、弹窗广告 |
+| 高德地图 | 开屏广告、弹窗广告 |
+| 酷安 | 开屏广告、弹窗广告 |
+| 美柚 | 开屏广告、弹窗广告 |
+| 随手记 | 开屏广告、弹窗广告 |
+| 腾讯视频 | 开屏广告、弹窗广告 |
+| 微博 | 开屏广告、弹窗广告 |
+| 小红书 | 开屏广告、弹窗广告 |
+| 萤石云视频 | 开屏广告、主页广告、弹窗广告 |
+| 优酷视频 | 开屏广告、弹窗广告 |
+| 知乎 | 开屏广告、弹窗广告 |
+
+---
+
+## 开发者指南
+
+### 项目结构
 
 ```
 .
@@ -24,15 +70,13 @@
 └── tsconfig.json                 # TypeScript 配置
 ```
 
-## 开发环境
-
-### 系统要求
+### 环境要求
 
 - **Node.js**: >= 22 (必需，用于 WasmGc 校验正则表达式)
 - **pnpm**: >= 9 (推荐包管理器)
 - **Git**: 用于版本控制
 
-### 环境安装
+### 快速开始
 
 ```bash
 # 克隆仓库
@@ -42,13 +86,11 @@ cd gkd_subscription
 # 安装依赖
 pnpm install
 
-# 如果网络问题，使用国内镜像
-pnpm install --registry=https://registry.npmmirror.com
+# 开发模式：修改规则后构建
+pnpm run build
 ```
 
-## 开发指南
-
-### 1. 添加新应用规则
+### 添加新应用规则
 
 在 `src/apps/` 目录下创建 `{packageName}.ts` 文件：
 
@@ -96,7 +138,7 @@ export default defineGkdApp({
 });
 ```
 
-### 2. 常用字段说明
+### 字段说明
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
@@ -115,7 +157,7 @@ export default defineGkdApp({
 | `matches` | string | 选择器表达式，用于匹配目标元素 |
 | `activityIds` | array | 指定规则生效的Activity ID |
 
-### 3. 选择器语法
+### 选择器语法
 
 GKD 使用类似 CSS 选择器的语法来匹配界面元素：
 
@@ -145,7 +187,7 @@ GKD 使用类似 CSS 选择器的语法来匹配界面元素：
 '@[clickable=true] >(1,2) [text="关闭"]'
 ```
 
-### 4. 构建与发布
+### 构建与发布
 
 ```bash
 # 构建订阅文件
@@ -164,7 +206,7 @@ pnpm run format
 - `CHANGELOG.md` - 变更日志
 - `README.md` - 订阅说明
 
-### 5. 提交规范
+### Git 提交规范
 
 提交信息格式：`类型: 描述`
 
@@ -176,12 +218,14 @@ pnpm run format
 - `refactor`: 重构
 - `chore`: 构建过程或辅助工具的变动
 
-## 订阅信息
+示例：
+```bash
+git commit -m "feat: 添加微博应用规则"
+git commit -m "fix: 修复哔哩哔哩开屏广告匹配规则"
+git commit -m "docs: 更新README使用说明"
+```
 
-- **订阅地址**: `https://raw.githubusercontent.com/jsynwy/gkd_subscription/main/dist/gkd.json5`
-- **镜像加速**: `https://fastly.jsdelivr.net/gh/jsynwy/gkd_subscription@main/dist/gkd.json5`
-- **应用数量**: 14 款
-- **规则总数**: 29 条
+---
 
 ## 相关链接
 
