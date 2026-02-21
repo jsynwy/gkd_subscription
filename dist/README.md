@@ -1,22 +1,22 @@
 # GKD 订阅规则
 
-## 订阅信息
+## 📋 订阅信息
 
 | 项目 | 内容 |
 |------|------|
-| 订阅版本 | v4 |
-| 类别数量 | 0 |
-| 全局规则 | 0 |
-| 应用数量 | 8 |
-| 应用规则 | 11 |
+| **订阅版本** | v4 |
+| **类别数量** | 0 |
+| **全局规则** | 0 |
+| **应用数量** | 8 |
+| **应用规则** | 11 |
 
-## 订阅地址
+## 🔗 订阅地址
 
 ```
 https://raw.githubusercontent.com/jsynwy/gkd_subscription/main/dist/gkd.json5
 ```
 
-## 使用方法
+## 📱 使用方法
 
 1. 打开 GKD 应用
 2. 进入「订阅」页面
@@ -24,7 +24,7 @@ https://raw.githubusercontent.com/jsynwy/gkd_subscription/main/dist/gkd.json5
 4. 输入上述订阅地址
 5. 点击「添加」即可
 
-## 规则列表
+## 📊 规则列表
 
 ### 已适配应用
 
@@ -39,11 +39,11 @@ https://raw.githubusercontent.com/jsynwy/gkd_subscription/main/dist/gkd.json5
 | 小红书 | 2 | 开屏广告、弹窗广告 |
 | 萤石云视频 | 3 | 开屏广告、主页广告、弹窗广告 |
 
-## 更新日志
+## 📝 更新日志
 
 详见 [CHANGELOG.md](./CHANGELOG.md)
 
-## 贡献与反馈
+## 🤝 贡献与反馈
 
 如有问题或建议，欢迎提交 Issue 或 Pull Request。
 
