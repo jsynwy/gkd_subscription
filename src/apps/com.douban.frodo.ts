@@ -16,7 +16,14 @@ export default defineGkdApp({
       rules: [
         {
           actionCd: 1000,
-          matches: '[vid="ad_parent"] >2 [vid="ad_view_skip_text"]',
+          matches: [
+            // 匹配广告容器内的跳过按钮（新布局）
+            '[vid="ad_parent"] > [vid="skip"]',
+            // 匹配旧布局
+            '[vid="splash_skip"] >2 [vid="splash_skip_text"]',
+            // 兜底：匹配广告容器本身（如果跳过按钮不可点击）
+            '[vid="ad_parent"]',
+          ],
         },
       ],
     },
