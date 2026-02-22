@@ -1,13 +1,12 @@
 import { defineGkdApp } from '@gkd-kit/define';
 
 export default defineGkdApp({
-  id: 'com.videogo',
-  name: '萤石云视频',
+  id: 'com.weico.international',
+  name: '微博国际版',
   groups: [
     {
       key: 1,
       name: '开屏广告',
-      desc: '点击跳过开屏广告',
       fastQuery: true,
       matchTime: 10000,
       actionMaximum: 1,
@@ -16,7 +15,7 @@ export default defineGkdApp({
       rules: [
         {
           matches:
-            '[text*="跳过" || text*="skip" || text*="Skip"][text.length<10][visibleToUser=true]',
+            '[text*="跳过" || text*="skip" || text^="Skip"][text.length<10][visibleToUser=true]',
         },
       ],
     },

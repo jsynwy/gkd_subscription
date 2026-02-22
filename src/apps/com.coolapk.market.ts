@@ -24,25 +24,5 @@ export default defineGkdApp({
         },
       ],
     },
-    {
-      key: 2,
-      name: '弹窗广告',
-      desc: '关闭各种弹窗广告',
-      fastQuery: true,
-      matchTime: 10000,
-      actionMaximum: 1,
-      resetMatch: 'activity',
-      rules: [
-        {
-          activityIds: [
-            '.view.main.MainActivity',
-            '.view.feed.FeedDetailActivityV8',
-            '.view.node.DynamicNodePageActivity',
-          ],
-          matches:
-            '[vid="close_view" || vid="close" || vid="iv_close" || desc="关闭" || text="关闭"][visibleToUser=true]',
-        },
-      ],
-    },
   ],
 });
