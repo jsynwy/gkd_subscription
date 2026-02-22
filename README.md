@@ -50,7 +50,6 @@ https://fastly.jsdelivr.net/gh/jsynwy/gkd_subscription@main/dist/gkd.json5
 | 19 | 中国移动浙江 | 开屏广告 |
 | 20 | 知乎 | 开屏广告 |
 | 21 | YouTube | 开屏广告、视频广告-跳过、关闭广告面板、会员广告-不用了 |
-| 21 | YouTube | 开屏广告、视频广告-跳过、关闭广告面板、会员广告-不用了 |
 
 ---
 
