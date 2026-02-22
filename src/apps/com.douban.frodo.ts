@@ -15,9 +15,8 @@ export default defineGkdApp({
       priorityTime: 10000,
       rules: [
         {
-          actionCd: 500,
-          matches:
-            '[vid="skip" || vid="count_down" || text*="跳过" || text^="Skip" || text^="SKIP"][visibleToUser=true]',
+          actionCd: 1000,
+          matches: '[vid="ad_parent"] >2 [vid="ad_view_skip_text"]',
         },
       ],
     },

@@ -15,7 +15,7 @@ export default defineGkdApp({
       rules: [
         {
           matches:
-            '[text*="跳过" || text*="skip" || text^="Skip"][text.length<10][visibleToUser=true]',
+            '[text*="跳过" || text*="关闭" || text*="skip" || text*="close"][text.length<10][visibleToUser=true]',
         },
       ],
     },
