@@ -17,11 +17,9 @@ export default defineGkdApp({
         {
           actionCd: 1000,
           matches: [
-            // 匹配广告容器内的跳过按钮（新布局）
-            '[vid="ad_parent"] > [vid="skip"]',
-            // 匹配旧布局
-            '[vid="splash_skip"] >2 [vid="splash_skip_text"]',
-            // 兜底：匹配广告容器本身（如果跳过按钮不可点击）
+            // 匹配可点击的广告容器（跳过按钮的父容器）
+            '[vid="ad_parent"][clickable=true]',
+            // 兜底：匹配广告容器
             '[vid="ad_parent"]',
           ],
         },
