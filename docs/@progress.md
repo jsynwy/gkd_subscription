@@ -1,5 +1,36 @@
 # 项目进度记录
 
+## 2026-02-23
+
+### 本次更新：修复哔哩哔哩HD版规则不生效问题
+
+#### 问题分析
+用户反馈哔哩哔哩HD版（包名：tv.danmaku.bilibilihd）规则不生效。
+
+经过检查发现：
+1. 虽然存在 `src/apps/tv.danmaku.bilibilihd.ts` 文件
+2. 但应用ID错误地写成了 `tv.danmaku.hd`，与实际包名不符
+3. 导致GKD无法正确识别和匹配该应用
+
+#### 修复方案
+修正应用ID为正确的包名：
+```typescript
+// 修复前
+id: 'tv.danmaku.hd',
+
+// 修复后
+id: 'tv.danmaku.bilibilihd',
+```
+
+#### 规则配置
+- **matchRoot**: true - 匹配根节点（哔哩哔哩系列需要）
+- **fastQuery**: true - 快速查询
+- **actionMaximum**: 2 - 最大执行2次（支持倒计时+跳过场景）
+- **actionCd**: 500 - 点击间隔500ms
+- **匹配规则**: 支持vid精确匹配和文本模糊匹配，同时支持中英文跳过按钮
+
+---
+
 ## 2026-02-22
 
 ### 本次更新内容
@@ -112,7 +143,36 @@ rules: [
 ],
 ```
 
+## 2026-02-23
+
+### 本次更新：参考AIsouler/GKD_subscription项目重新编写豆瓣APP规则
+
+#### 参考项目分析
+- 参考项目：https://github.com/AIsouler/GKD_subscription
+- 分析了该项目的豆瓣APP规则实现方式
+
+#### 规则改进内容
+1. **优化选择器匹配逻辑**
+   - 使用数组形式组织多个匹配条件
+   - 保留原有的vid精确匹配：`[vid="ad_parent"] > [vid="skip"]`、`[vid="splash_skip"] >2 [vid="splash_skip_text"]`、`[vid="ad_parent"]`
+
+2. **增强跳过按钮兼容性**
+   - 新增文本匹配：`[text*="跳过" || text*="skip" || text^="Skip" || text^="SKIP"]`
+   - 限制文本长度：`[text.length<10]` 避免误触
+   - 确保可见性：`[visibleToUser=true]`
+
+3. **优化点击行为**
+   - 点击间隔从1000ms调整为500ms，响应更快
+   - 保持 `actionMaximum: 2`，支持倒计时+跳过两次点击场景
+   - 保留 `matchRoot: true`，确保能匹配根节点上的广告元素
+
+#### 技术要点
+- 规则设计兼顾了豆瓣新老版本的兼容性
+- 同时支持vid精确匹配和文本模糊匹配
+- 支持中英文跳过按钮识别
+
 ### 下一步计划
 - [ ] 持续测试各应用开屏广告规则的兼容性
 - [ ] 根据用户反馈优化特定应用的规则
 - [ ] 考虑增加更多主流应用的支持
+- [ ] 学习参考项目其他应用的规则实现方式
