@@ -15,12 +15,12 @@ export default defineGkdApp({
       priorityTime: 10000,
       rules: [
         {
-          actionCd: 1000,
+          actionCd: 500,
           matches: [
-            // 匹配可点击的广告容器（跳过按钮的父容器）
-            '[vid="ad_parent"][clickable=true]',
-            // 兜底：匹配广告容器
+            '[vid="ad_parent"] > [vid="skip"]',
+            '[vid="splash_skip"] >2 [vid="splash_skip_text"]',
             '[vid="ad_parent"]',
+            '[text*="跳过" || text*="skip" || text^="Skip" || text^="SKIP"][text.length<10][visibleToUser=true]',
           ],
         },
       ],
