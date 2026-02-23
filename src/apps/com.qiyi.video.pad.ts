@@ -7,15 +7,17 @@ export default defineGkdApp({
     {
       key: 1,
       name: '开屏广告',
+      matchRoot: true,
       fastQuery: true,
       matchTime: 10000,
-      actionMaximum: 1,
+      actionMaximum: 2,
+      actionCd: 500,
       resetMatch: 'app',
       priorityTime: 10000,
       rules: [
         {
           matches:
-            '[text*="跳过" || text*="关闭" || text*="skip" || text*="close"][text.length<10][visibleToUser=true]',
+            '[vid="skip" || vid="count_down" || text*="跳过" || text^="Skip" || text^="SKIP"][visibleToUser=true]',
         },
       ],
     },

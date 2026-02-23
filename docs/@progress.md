@@ -2,6 +2,69 @@
 
 ## 2026-02-23
 
+### 本次更新：参考AIsouler/GKD_subscription项目重写爱奇艺Pad版和豆瓣APP规则
+
+#### 参考项目
+- 项目地址：https://github.com/AIsouler/GKD_subscription
+- 分析了该项目中爱奇艺Pad版和豆瓣APP的规则实现
+
+#### 爱奇艺Pad版规则改进
+1. **添加 `matchRoot: true`** - 确保能匹配根节点上的广告元素
+2. **增加 `actionMaximum: 2`** - 支持倒计时+跳过两次点击场景
+3. **添加 `actionCd: 500`** - 点击间隔500ms，避免重复点击失败
+4. **优化选择器** - 支持vid精确匹配和文本模糊匹配
+   - `[vid="skip" || vid="count_down"]`
+   - `[text*="跳过" || text^="Skip" || text^="SKIP"]`
+
+#### 豆瓣APP规则改进
+1. **采用数组形式的匹配规则** - 支持多种匹配方式同时生效
+2. **保留vid精确匹配** - 适配豆瓣新老版本布局
+   - `[vid="ad_parent"] > [vid="skip"]` - 新布局
+   - `[vid="splash_skip"] >2 [vid="splash_skip_text"]` - 旧布局
+   - `[vid="ad_parent"]` - 兜底方案
+3. **保留文本模糊匹配** - 作为备用匹配方案
+4. **保持 `matchRoot: true`** - 确保能匹配根节点
+
+#### 技术要点
+- 两种规则设计都兼顾了应用新老版本的兼容性
+- 同时支持vid精确匹配和文本模糊匹配
+- 支持中英文跳过按钮识别
+- 参考项目的规则更加精细，考虑了更多边界情况
+- 构建验证通过
+
+---
+
+## 2026-02-23
+
+### 本次更新：修复爱奇艺Pad版开屏广告误触发问题
+
+#### 问题分析
+用户反馈爱奇艺Pad版开屏广告有时跳过时会误触发广告。
+
+经过检查发现：
+1. 原规则选择器包含了 `"关闭"` 和 `"close"` 匹配条件
+2. 这会导致在正常界面中，任何包含"关闭"文字的按钮都可能被误触发
+3. 选择器过于宽泛，缺乏精确性
+
+#### 修复方案
+简化选择器，只匹配"跳过"相关文本，与项目标准模板一致：
+```typescript
+// 修复前
+'[text*="跳过" || text*="关闭" || text*="skip" || text*="close"][text.length<10][visibleToUser=true]'
+
+// 修复后
+'[text*="跳过" || text*="skip" || text^="Skip"][text.length<10][visibleToUser=true]'
+```
+
+#### 技术要点
+- 移除 `"关闭"` 和 `"close"` 匹配条件，避免误触
+- 保持 `[text.length<10]` 限制，确保只匹配短文本按钮
+- 保留 `[visibleToUser=true]` 确保只匹配可见元素
+
+---
+
+## 2026-02-23
+
 ### 本次更新：修复哔哩哔哩HD版规则不生效问题
 
 #### 问题分析
@@ -145,31 +208,35 @@ rules: [
 
 ## 2026-02-23
 
-### 本次更新：参考AIsouler/GKD_subscription项目重新编写豆瓣APP规则
+### 本次更新：参考AIsouler/GKD_subscription项目重写爱奇艺Pad版和豆瓣APP规则
 
-#### 参考项目分析
-- 参考项目：https://github.com/AIsouler/GKD_subscription
-- 分析了该项目的豆瓣APP规则实现方式
+#### 参考项目
+- 项目地址：https://github.com/AIsouler/GKD_subscription
+- 分析了该项目中爱奇艺Pad版和豆瓣APP的规则实现
 
-#### 规则改进内容
-1. **优化选择器匹配逻辑**
-   - 使用数组形式组织多个匹配条件
-   - 保留原有的vid精确匹配：`[vid="ad_parent"] > [vid="skip"]`、`[vid="splash_skip"] >2 [vid="splash_skip_text"]`、`[vid="ad_parent"]`
+#### 爱奇艺Pad版规则改进
+1. **添加 `matchRoot: true`** - 确保能匹配根节点上的广告元素
+2. **增加 `actionMaximum: 2`** - 支持倒计时+跳过两次点击场景
+3. **添加 `actionCd: 500`** - 点击间隔500ms，避免重复点击失败
+4. **优化选择器** - 支持vid精确匹配和文本模糊匹配
+   - `[vid="skip" || vid="count_down"]`
+   - `[text*="跳过" || text^="Skip" || text^="SKIP"]`
 
-2. **增强跳过按钮兼容性**
-   - 新增文本匹配：`[text*="跳过" || text*="skip" || text^="Skip" || text^="SKIP"]`
-   - 限制文本长度：`[text.length<10]` 避免误触
-   - 确保可见性：`[visibleToUser=true]`
-
-3. **优化点击行为**
-   - 点击间隔从1000ms调整为500ms，响应更快
-   - 保持 `actionMaximum: 2`，支持倒计时+跳过两次点击场景
-   - 保留 `matchRoot: true`，确保能匹配根节点上的广告元素
+#### 豆瓣APP规则改进
+1. **采用数组形式的匹配规则** - 支持多种匹配方式同时生效
+2. **保留vid精确匹配** - 适配豆瓣新老版本布局
+   - `[vid="ad_parent"] > [vid="skip"]` - 新布局
+   - `[vid="splash_skip"] >2 [vid="splash_skip_text"]` - 旧布局
+   - `[vid="ad_parent"]` - 兜底方案
+3. **保留文本模糊匹配** - 作为备用匹配方案
+4. **保持 `matchRoot: true`** - 确保能匹配根节点
 
 #### 技术要点
-- 规则设计兼顾了豆瓣新老版本的兼容性
+- 两种规则设计都兼顾了应用新老版本的兼容性
 - 同时支持vid精确匹配和文本模糊匹配
 - 支持中英文跳过按钮识别
+- 参考项目的规则更加精细，考虑了更多边界情况
+- 构建验证通过
 
 ### 下一步计划
 - [ ] 持续测试各应用开屏广告规则的兼容性
